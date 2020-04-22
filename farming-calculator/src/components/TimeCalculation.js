@@ -20,6 +20,7 @@ class TimeCalculation extends Component {
                 goalExperience: props.goalExperience,
             }
         }
+        return null;
     }
 
     render() {
