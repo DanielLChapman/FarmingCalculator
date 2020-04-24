@@ -5,6 +5,7 @@ import {generateLevel } from './function';
 
 //plants
 import TimeCalculations from './components/TimeCalculation';
+import ExperienceView from './components/ExperienceView';
 
 class App extends Component {
 
@@ -110,6 +111,8 @@ class App extends Component {
               currentExperience={this.state.currentExperience}
               goalExperience={this.state.goalExperience}
               />
+
+            <ExperienceView />
           </section>
         </main> 
   
