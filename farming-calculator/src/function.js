@@ -33,3 +33,56 @@ export const generateLevel = (experience, level = false) => {
     return returnObject;
     
 }
+
+export const experienceCalculation = (currentExperience = 0, patches, plants, newDay, growthValue = 1) => {
+    let trees = plants['trees'];
+    let fruittrees = plants['fruittrees'];
+
+    Object.keys(patches).map((y) => {
+        let x = patches[y].patches;
+        //let x = state.planting.trees.patches;
+
+        let typeToUse = {};
+
+        switch (y) {
+            case 'trees':
+                typeToUse = trees;
+                break;
+            case 'fruittrees':
+                typeToUse = fruittrees;
+                break;
+            default:
+                console.log(y);
+        }
+
+
+        Object.keys(x).map((i) => {
+            if (newDay) {
+              x[i].numberPlanted = 0;
+            }
+            if (x[i].numberPlanted > x[i].maxNumberPlanted) {
+              return null;
+            }
+            if (!x[i].planted && x[i].numberPlanted <= x[i].maxNumberPlanted) {
+              x[i].planted = true;
+              x[i].numberPlanted += 1;
+              currentExperience += typeToUse[x[i].type].planting;
+              console.log('planted');
+            }
+            
+            x[i].growth -= growthValue;
+            if (x[i].growth === 0) {
+              currentExperience += typeToUse[x[i].type].checking;
+              currentExperience += typeToUse[x[i].type].harvest;
+              x[i].planted = false;
+              x[i].growth =  typeToUse[x[i].type].growth;
+              console.log(`${x[i].type} done at location ${i}`);
+            }
+          });
+
+
+    });
+    
+
+    return currentExperience;
+}

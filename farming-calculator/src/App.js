@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './css/App.css';
 
-import {generateLevel } from './function';
+import {generateLevel, experienceCalculation } from './function';
 
 //plants
 import TimeCalculations from './components/TimeCalculation';
@@ -74,7 +74,59 @@ class App extends Component {
               planted: false,
             },
           }
-        }
+        },
+        fruittrees: {
+          patches: {
+            stronghold: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'dragonfruit',
+              growth: fruittrees['dragonfruit'].growth,
+              planted: false
+
+            },
+            catherby: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'dragonfruit',
+              growth: fruittrees['dragonfruit'].growth,
+              planted: false
+            },
+            maze: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'dragonfruit',
+              growth: fruittrees['dragonfruit'].growth,
+              planted: false
+            },
+            brimhaven: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'dragonfruit',
+              growth: fruittrees['dragonfruit'].growth,
+              planted: false,
+            },
+            lletya: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'dragonfruit',
+              growth: fruittrees['dragonfruit'].growth,
+              planted: false,
+            },
+            guild: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'dragonfruit',
+              growth: fruittrees['dragonfruit'].growth,
+              planted: false,
+            },
+          }
+        },
+      },
+
+      plants: {
+        trees,
+        fruittrees
       }
     }
   }
@@ -86,7 +138,7 @@ class App extends Component {
     let newDay = false;
 
     if (state.startCounting) {
-      state.minutes += 1;
+      state.minutes += 5;
       if (state.minutes === 60) {
           state.minutes = 0;
           state.hours++;
@@ -98,38 +150,17 @@ class App extends Component {
       }
   
       //Calculations for each one
+
+
       //trees
-      let x = state.planting.trees.patches;
-      Object.keys(x).map((i) => {
-        if (newDay) {
-          x[i].numberPlanted = 0;
-        }
-        if (x[i].numberPlanted > x[i].maxNumberPlanted) {
-          console.log('here');
-          return null;
-        }
-        if (!x[i].planted && x[i].numberPlanted <= x[i].maxNumberPlanted) {
-          x[i].planted = true;
-          x[i].numberPlanted += 1;
-          state.currentExperience += trees[x[i].type].planting;
-          console.log('planted');
-        }
-        
-        x[i].growth -= 1;
-        if (x[i].growth === 0) {
-          state.currentExperience += trees[x[i].type].checking;
-          state.currentExperience += trees[x[i].type].harvest;
-          x[i].planted = false;
-          x[i].growth =  trees[x[i].type].growth;
-          console.log(`magic tree done at location ${i}`);
-        }
-      })
-      if (state.days < 10) {
+      state.currentExperience = experienceCalculation(state.currentExperience, state.planting, state.plants, newDay, 5);
+
+      if (state.days < 50) {
           setTimeout(() => {
               this.setState({...state});
           }, 1);
       } 
-      if ((state.days >= 10 && !state.finalUpdate) || (state.currentExperience >= state.goalExperience) ) {
+      if ((state.days >= 50 && !state.finalUpdate) || (state.currentExperience >= state.goalExperience) ) {
           state.finalUpdate = true;
           state.startCounting = false;
           console.log(generateLevel(90, false));
