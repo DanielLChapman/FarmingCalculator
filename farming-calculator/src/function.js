@@ -86,3 +86,34 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
 
     return currentExperience;
 }
+
+export const initialization = (patches) => {
+    /*
+
+    turn
+     export const treepatches = ['Falador Park', 'Lumbridge', 'Taverly', 'Gnome Stronghold', 'Farming Guild', 'Varrock'];
+
+    into 
+        trees: {
+          patches: {
+            lumbridge: {
+              numberPlanted: 0,
+              maxNumberPlanted: 2,
+              type: 'magic',
+              growth: trees['magic'].growth,
+              planted: false
+
+            },
+
+    */
+   let returnObject = {};
+   Object.keys(patches).map((x) => {
+       let a = x.split('patches')[0];
+
+       returnObject[a] = {
+           patches: {...patches[x]}
+       }
+    
+       console.log(returnObject);
+   })
+};

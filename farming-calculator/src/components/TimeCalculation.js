@@ -14,23 +14,22 @@ class TimeCalculation extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.currentExperience && props.goalExperience) {
+        try {
             return {
                 currentExperience: props.currentExperience,
                 goalExperience: props.goalExperience,
             }
+        } catch (error) {
+            return null;
         }
+        
+        
         return null;
     }
 
     render() {
         return (
             <div>
-                <Trees 
-                    minutes= {this.props.minutes}
-                    hours= {this.props.hours}
-                    days= {this.props.days}
-                    />
                <br />
                Current Experience: {this.state.currentExperience}<br />
                Goal Experience: {this.state.goalExperience}<br />

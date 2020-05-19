@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import './css/App.css';
 
-import {generateLevel, experienceCalculation } from './function';
+import {generateLevel, experienceCalculation, initialization} from './function';
 
 //plants
 import TimeCalculations from './components/TimeCalculation';
 import ExperienceView from './components/ExperienceView';
 
-import {fruittrees} from './data/FruitTrees';
-import {trees} from './data/Trees';
+import {fruittrees, fruittreepatches} from './data/FruitTrees';
+import {trees, treepatches} from './data/Trees';
 
 
 //Dont forget farming outfit
@@ -20,16 +20,21 @@ class App extends Component {
       minutes: 0,
       hours: 0, 
       days: 0,
+      initialized: false,
       finalUpdate: false,
       startCounting: false,
       currentExperience: 0,
       goalExperience: 13034431,
       currentLevel: 1,
       goalLevel: 99,
+      experienceNeeded: 13034431,
+      timeModifier: 5,
 
+      //should be added to when a plant is added to teh calculator
       planting: {
         trees: {
           patches: {
+            /*
             lumbridge: {
               numberPlanted: 0,
               maxNumberPlanted: 2,
@@ -37,46 +42,12 @@ class App extends Component {
               growth: trees['magic'].growth,
               planted: false
 
-            },
-            varrock: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'magic',
-              growth: trees['magic'].growth,
-              planted: false
-            },
-            falador: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'magic',
-              growth: trees['magic'].growth,
-              planted: false
-            },
-            taverly: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'magic',
-              growth: trees['magic'].growth,
-              planted: false,
-            },
-            stronghold: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'magic',
-              growth: trees['magic'].growth,
-              planted: false,
-            },
-            guild: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'magic',
-              growth: trees['magic'].growth,
-              planted: false,
-            },
+            },*/
           }
         },
         fruittrees: {
           patches: {
+            /*
             stronghold: {
               numberPlanted: 0,
               maxNumberPlanted: 2,
@@ -84,51 +55,35 @@ class App extends Component {
               growth: fruittrees['dragonfruit'].growth,
               planted: false
 
-            },
-            catherby: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'dragonfruit',
-              growth: fruittrees['dragonfruit'].growth,
-              planted: false
-            },
-            maze: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'dragonfruit',
-              growth: fruittrees['dragonfruit'].growth,
-              planted: false
-            },
-            brimhaven: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'dragonfruit',
-              growth: fruittrees['dragonfruit'].growth,
-              planted: false,
-            },
-            lletya: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'dragonfruit',
-              growth: fruittrees['dragonfruit'].growth,
-              planted: false,
-            },
-            guild: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'dragonfruit',
-              growth: fruittrees['dragonfruit'].growth,
-              planted: false,
-            },
+            },*/
           }
         },
       },
-
+      //data holders
       plants: {
         trees,
         fruittrees
+      },
+
+      patches: {
+        treepatches,
+        fruittreepatches
       }
     }
+  }
+
+  componentDidMount() {
+    let state = this.state;
+
+
+    if (!state.initialized) {
+      initialization(state.patches);
+      state.initialized = true;
+    }
+
+    this.setState({
+      ...state
+    })
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -138,9 +93,10 @@ class App extends Component {
     let newDay = false;
 
     if (state.startCounting) {
-      state.minutes += 5;
-      if (state.minutes === 60) {
-          state.minutes = 0;
+      state.minutes += state.timeModifier;
+      if (state.minutes >= 60) {
+
+          state.minutes = state.minutes - 60;
           state.hours++;
       }
       if (state.hours === 24) {
@@ -153,7 +109,7 @@ class App extends Component {
 
 
       //trees
-      state.currentExperience = experienceCalculation(state.currentExperience, state.planting, state.plants, newDay, 5);
+      state.currentExperience = experienceCalculation(state.currentExperience, state.planting, state.plants, newDay, state.timeModifier);
 
       if (state.days < 50) {
           setTimeout(() => {
@@ -172,6 +128,20 @@ class App extends Component {
     
   }
 
+  setExperience = (experienceObject) => {
+    let state = this.state;
+
+    state.currentExperience = experienceObject.currentExperience;
+    state.currentLevel = experienceObject.currentLevel;
+    state.goalExperience = experienceObject.goalExperience;
+    state.goalLevel = experienceObject.goalLevel;
+
+    this.setState({
+      ...state
+    });
+  
+  }
+  /*
   setExperience = (type, amount, level = false) => {
     let state = this.state;
 
@@ -189,7 +159,7 @@ class App extends Component {
 
     this.setState({...state});
   }
-
+*/
   startTimer = () => {
     let state = this.state;
     
@@ -202,6 +172,17 @@ class App extends Component {
     this.setState({...state});
   }
 
+  handleChange = (e) => {
+    let state = this.state;
+    switch (e.target.name) {
+      case 'time':
+        state.timeModifier = parseInt(e.target.value, 10);
+        break;
+      default:
+        console.log(e.target.name);
+    }
+    this.setState({...state});
+  }
   render() {
 
     return (
@@ -211,7 +192,11 @@ class App extends Component {
             Minutes: {this.state.minutes} <br />
             Hours: {this.state.hours} <br />
             Days: {this.state.days} <br />
-            <button onClick={this.startTimer}>Start Timer</button>
+            <button onClick={this.startTimer}>Start Calculation</button>
+            <label>
+              Time Increment:
+              <input type="number" name="time" value={this.state.timeModifier}  onChange={this.handleChange} max="60" min="1" />
+            </label>
             
           </section>
           
@@ -224,7 +209,9 @@ class App extends Component {
               goalExperience={this.state.goalExperience}
               />
 
-            <ExperienceView />
+            <ExperienceView 
+            
+              updateGoals={this.setExperience}/>
           </section>
         </main> 
   

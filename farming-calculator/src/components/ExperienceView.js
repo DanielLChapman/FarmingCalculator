@@ -8,9 +8,9 @@ class ExperienceView extends Component {
         this.state = {
             currentExperience: 0,
             currentLevel: 1,
-            goalExperience: 83,
-            goalLevel: 2,
-            experienceNeeded: 83,
+            goalExperience: 13034431,
+            goalLevel: 99,
+            experienceNeeded: 13034431,
         }
     }
 
@@ -41,6 +41,18 @@ class ExperienceView extends Component {
 
         this.setState({...state});
         
+    }
+
+    handleSubmit = () => {
+        let eO = {
+            currentLevel: this.state.currentLevel,
+            currentExperience: this.state.currentExperience,
+            goalLevel: this.state.goalLevel,
+            goalExperience: this.state.goalExperience,
+            experienceNeeded: this.state.experienceNeeded,
+        }
+
+        this.props.updateGoals(eO);
     }
 
     render() {
@@ -82,7 +94,9 @@ class ExperienceView extends Component {
                         min="2"
                         max="200" />
                 </label><br />
-                <button>Submit</button>
+                <button onClick={
+                    this.handleSubmit
+                }>Submit</button>
 
                 <br />
                 Experience Needed : {this.state.experienceNeeded}

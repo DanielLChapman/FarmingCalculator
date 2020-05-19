@@ -65,3 +65,5 @@ export const fruittrees = {
     },
     
 }
+
+export const fruittreepatches = ['Gnome Stronghold', 'Catherby', 'Gnome Maze', 'Brimhaven', 'Lletya', 'Farming Guild'];
