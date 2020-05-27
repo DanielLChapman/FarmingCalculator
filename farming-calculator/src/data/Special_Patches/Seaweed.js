@@ -1,4 +1,4 @@
-export const seaweed = {
+export const seaweeds = {
     seaweed: {
         name: 'Giant Seaweed',
         level: 23,

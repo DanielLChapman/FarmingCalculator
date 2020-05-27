@@ -9,7 +9,29 @@ import ExperienceView from './components/ExperienceView';
 
 import {fruittrees, fruittreepatches} from './data/FruitTrees';
 import {trees, treepatches} from './data/Trees';
+import {spirittrees, spirittreepatches} from './data/SpiritTrees';
+import {allotments, allotmentpatches} from './data/Allotments';
+import {bushes, bushpatches} from './data/Bushes';
+import {cacti, cactuspatches} from './data/Cactus';
+import {flowers, flowerpatches} from './data/Flowers';
+import {herbs, herbpatches} from './data/Herbs';
+import {hops, hoppatches} from './data/Hops';
+import {calquattrees, calquattreepatches} from './data/Special_Trees/Calquat';
+import {celastrustrees, celastrustreepatches} from './data/Special_Trees/Celastrus';
+import {crystaltrees, crystaltreepatches} from './data/Special_Trees/Crystal';
+import {hardwoodtrees, hardwoodtreepatches} from './data/Special_Trees/Hardwood';
+import {redwoodtrees, redwoodtreepatches} from './data/Special_Trees/Redwood';
+import {belladonnas, belladonnapatches} from './data/Special_Patches/Belladonna';
+import {grapes, grapepatches} from './data/Special_Patches/Grapes';
+import {hesporis, hesporipatches} from './data/Special_Patches/Hespori';
+import {mushrooms, mushroompatches} from './data/Special_Patches/Mushroom';
+import {seaweeds, seaweedpatches} from './data/Special_Patches/Seaweed';
 
+
+
+//Spirit Tree level requirements, 1, 2, infinite
+//Farming Guild Level Requirements
+//Maybe offer a way for a single placement, not multiple
 
 //Dont forget farming outfit
 class App extends Component {
@@ -40,7 +62,8 @@ class App extends Component {
               maxNumberPlanted: 2,
               type: 'magic',
               growth: trees['magic'].growth,
-              planted: false
+              planted: false,
+              singlePlant: false,
 
             },*/
           }
@@ -53,7 +76,8 @@ class App extends Component {
               maxNumberPlanted: 2,
               type: 'dragonfruit',
               growth: fruittrees['dragonfruit'].growth,
-              planted: false
+              planted: false,
+              singlePlant: false
 
             },*/
           }
@@ -62,12 +86,54 @@ class App extends Component {
       //data holders
       plants: {
         trees,
-        fruittrees
+        fruittrees,
+        spirittrees,
+        allotments,
+        bushes,
+        cacti,
+        flowers,
+        herbs,
+        hops,
+        special_trees: {
+          calquattrees,
+          celastrustrees,
+          crystaltrees,
+          hardwoodtrees,
+          redwoodtrees,
+        },
+        special_patches: {
+          belladonnas,
+          grapes,
+          hesporis,
+          mushrooms,
+          seaweeds,
+        }
       },
 
       patches: {
         treepatches,
-        fruittreepatches
+        fruittreepatches,
+        spirittreepatches,
+        allotmentpatches,
+        bushpatches,
+        cactuspatches,
+        flowerpatches,
+        herbpatches,
+        hoppatches,
+        special_trees: {
+          calquattreepatches,
+          celastrustreepatches,
+          crystaltreepatches,
+          hardwoodtreepatches,
+          redwoodtreepatches,
+        },
+        special_patches: {
+          belladonnapatches,
+          grapepatches,
+          hesporipatches,
+          mushroompatches,
+          seaweedpatches,
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-export const belladonna = {
+export const belladonnas = {
     belladonna: {
         name: 'Belladonna',
         level: 63,

@@ -1,4 +1,4 @@
-export const hespori = {
+export const hesporis = {
     hespori: {
         name: 'Hespori',
         level: 65,

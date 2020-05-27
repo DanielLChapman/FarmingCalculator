@@ -1,4 +1,4 @@
-export const grape = {
+export const grapes = {
     grape: {
         name: 'Grapes (x12)',
         level: 36,

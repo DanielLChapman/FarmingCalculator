@@ -1,4 +1,4 @@
-export const mushroom = {
+export const mushrooms = {
     mushroom: {
         name: 'Mushroom',
         level: 53,
