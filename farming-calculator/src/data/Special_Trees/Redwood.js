@@ -10,4 +10,4 @@ export const redwoodtrees = {
 };
 
 
-export const calquattreepatches = ['Farming Guild'];
+export const redwoodtreepatches = ['Farming Guild'];

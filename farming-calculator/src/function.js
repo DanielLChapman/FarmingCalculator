@@ -3,7 +3,7 @@ export const generateLevel = (experience, level = false) => {
 
     let points = 0;
     let output = 0;
-    let minlevel = 2; // first level to display
+
     let maxlevel = 200; // last level to display
 
     let returnObject = {
@@ -11,7 +11,6 @@ export const generateLevel = (experience, level = false) => {
         currentExperience: 0,
     }
 
-    let previousOutput = 0;
 
 
     for (let lvl = 1; lvl <= maxlevel; lvl++)
@@ -27,7 +26,6 @@ export const generateLevel = (experience, level = false) => {
         returnObject.currentExperience = experience;
         break;
     }
-    previousOutput = output;
     output = Math.floor(points / 4);
     }
     return returnObject;
@@ -38,7 +36,7 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
     let trees = plants['trees'];
     let fruittrees = plants['fruittrees'];
 
-    Object.keys(patches).map((y) => {
+    Object.keys(patches).forEach((y) => {
         let x = patches[y].patches;
         //let x = state.planting.trees.patches;
 
@@ -56,7 +54,7 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
         }
 
 
-        Object.keys(x).map((i) => {
+        Object.keys(x).forEach((i) => {
             if (newDay) {
               x[i].numberPlanted = 0;
             }
@@ -87,7 +85,7 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
     return currentExperience;
 }
 
-export const initialization = (patches) => {
+export const initialization = (patches = {}) => {
     /*
 
     turn
@@ -107,13 +105,22 @@ export const initialization = (patches) => {
 
     */
    let returnObject = {};
-   Object.keys(patches).map((x) => {
+
+   Object.keys(patches).forEach((x) => {
        let a = x.split('patches')[0];
 
-       returnObject[a] = {
-           patches: {...patches[x]}
+       if (x !== "special_trees" && x !== "special_patches") {
+            returnObject[a] = {
+                patches: {...patches[x]}
+            }
+       } else {
+           let r = patches[x];
+           returnObject[a] = {
+                ...initialization(r)
+           }
        }
-    
-       console.log(returnObject);
-   })
+
+   });
+
+   return returnObject;
 };

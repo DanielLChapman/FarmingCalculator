@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Trees from './plants/Trees';
 
 
 class TimeCalculation extends Component {
@@ -22,9 +21,6 @@ class TimeCalculation extends Component {
         } catch (error) {
             return null;
         }
-        
-        
-        return null;
     }
 
     render() {

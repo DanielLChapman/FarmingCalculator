@@ -6,13 +6,14 @@ import {generateLevel, experienceCalculation, initialization} from './function';
 //plants
 import TimeCalculations from './components/TimeCalculation';
 import ExperienceView from './components/ExperienceView';
+import CalculatorView from './components/CalculatorView';
 
 import {fruittrees, fruittreepatches} from './data/FruitTrees';
 import {trees, treepatches} from './data/Trees';
 import {spirittrees, spirittreepatches} from './data/SpiritTrees';
 import {allotments, allotmentpatches} from './data/Allotments';
 import {bushes, bushpatches} from './data/Bushes';
-import {cacti, cactuspatches} from './data/Cactus';
+import {cacti, cactipatches} from './data/Cactus';
 import {flowers, flowerpatches} from './data/Flowers';
 import {herbs, herbpatches} from './data/Herbs';
 import {hops, hoppatches} from './data/Hops';
@@ -116,7 +117,7 @@ class App extends Component {
         spirittreepatches,
         allotmentpatches,
         bushpatches,
-        cactuspatches,
+        cactipatches,
         flowerpatches,
         herbpatches,
         hoppatches,
@@ -134,7 +135,9 @@ class App extends Component {
           mushroompatches,
           seaweedpatches,
         }
-      }
+      },
+      organizedPatches: {
+      },
     }
   }
 
@@ -143,8 +146,9 @@ class App extends Component {
 
 
     if (!state.initialized) {
-      initialization(state.patches);
+      let a = initialization(state.patches);
       state.initialized = true;
+      state.organizedPatches = a;
     }
 
     this.setState({
@@ -278,6 +282,9 @@ class App extends Component {
             <ExperienceView 
             
               updateGoals={this.setExperience}/>
+          </section>
+          <section className="main-content">
+            <CalculatorView patches={this.state.organizedPatches} plants={this.state.plants} />
           </section>
         </main> 
   

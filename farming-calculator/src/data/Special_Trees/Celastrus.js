@@ -10,4 +10,4 @@ export const celastrustrees = {
 };
 
 
-export const calquattreepatches = ['Farming Guild'];
+export const celastrustreepatches = ['Farming Guild'];

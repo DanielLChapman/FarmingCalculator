@@ -19,4 +19,4 @@ export const hardwoodtrees = {
 };
 
 
-export const calquattreepatches = ['Fossil Island', 'Fossil Island', 'Fossil Island'];
+export const hardwoodtreepatches = ['Fossil Island', 'Fossil Island', 'Fossil Island'];
