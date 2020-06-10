@@ -114,6 +114,10 @@ export const initialization = (patches = {}) => {
                 patches: {...patches[x]}
             }
        } else {
+           
+           if (x === "special_patches") {
+               a = "special_patches";
+           }
            let r = patches[x];
            returnObject[a] = {
                 ...initialization(r)

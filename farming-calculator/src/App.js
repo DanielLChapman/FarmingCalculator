@@ -4,7 +4,6 @@ import './css/App.css';
 import {generateLevel, experienceCalculation, initialization} from './function';
 
 //plants
-import TimeCalculations from './components/TimeCalculation';
 import ExperienceView from './components/ExperienceView';
 import CalculatorView from './components/CalculatorView';
 
@@ -271,20 +270,12 @@ class App extends Component {
           </section>
           
           <section className="content-view">
-            <TimeCalculations 
-              days={this.state.days}
-              minutes={this.state.minutes}
-              hours={this.state.hours}
-              currentExperience={this.state.currentExperience}
-              goalExperience={this.state.goalExperience}
-              />
-
             <ExperienceView 
             
               updateGoals={this.setExperience}/>
           </section>
           <section className="main-content">
-            <CalculatorView patches={this.state.organizedPatches} plants={this.state.plants} />
+            <CalculatorView patches={this.state.organizedPatches} plants={this.state.plants} level={this.state.currentLevel} />
           </section>
         </main> 
   
