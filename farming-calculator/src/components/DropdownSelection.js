@@ -76,20 +76,39 @@ class DropdownSelection extends Component {
 
     render() {
         let a = [];
+        let b = false;
+        if (this.props.plants && Object.keys(this.props.plants).length <= 1) {
+            b = true;
+        }
         for (let i = 0; i < this.state.maxPerDay; i++) {
             a.push(i);
         }
+        
         if (this.props.plants) {
             return (
                 <>
                 <td>
-                    <select value={this.state.selected} onChange={this.handleChange} >
-                        {Object.keys(this.props.plants).map((x, i) => {
-                            return <option 
-                                value={this.props.plants[x].name}
-                                key={i}>{this.props.plants[x].name}</option>
-                        })}
-                    </select>
+                    {
+                        !b && (
+                            <select value={this.state.selected} onChange={this.handleChange} >
+                                {Object.keys(this.props.plants).map((x, i) => {
+                                    return <option 
+                                        value={this.props.plants[x].name}
+                                        key={i}>{this.props.plants[x].name}</option>
+                                })}
+                             </select>
+                        )
+                    }
+                    {
+                        b && (
+                            <span>
+                                {Object.keys(this.props.plants).map((x, i) => {
+                                    return this.props.plants[x].name
+                                })}
+                            </span>
+                        )
+                    }
+                   
                     { /*dropdown */ }
                 </td>
                 <td>
@@ -102,7 +121,7 @@ class DropdownSelection extends Component {
                      { this.state.check }
                 </td>
                 <td>
-                     { this.state.harvest }
+                     { Math.floor(this.state.harvest*100)/100 }
                 </td>
                 <td>
                         <select value={this.state.perDayAdd} onChange={this.handleAdd}>

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import DropdownWindow from './DropdownWindow';
+import {capitalizeFirstLetter} from './CalculatorView'
 
+function convertSpecial(name) {
+    let a = name.split('_');
+    return capitalizeFirstLetter(a[0]) + " " + capitalizeFirstLetter(a[1])
+};
 
 class Patches extends Component {
 
@@ -20,6 +25,8 @@ class Patches extends Component {
     }
     render() {
         //Need a check for chopping for exp and not
+
+        
         let displayValue = {display: "none"};
         if (this.state.visible) {
             displayValue = {display: 'block'};
@@ -42,11 +49,29 @@ class Patches extends Component {
                     </div>
                 </div>
             );
-        } else {
-            console.log(this.props.patches);
-        }
 
-        return <div>Loading...</div>
+        } else if(this.props.patches && Object.keys(this.props.patches).length > 0) { 
+            return (
+                <div>
+                    <h5 onClick={this.handleClick}>{convertSpecial(this.props.name)}</h5>
+                    <div className="sub-patches" style={displayValue}>
+                    {Object.keys(this.props.patches).map((x, i) => {
+                            return <div key={i}>
+                                {capitalizeFirstLetter(x.split('tree')[0])}
+                                <table>
+                                <DropdownWindow plants={this.props.plants[x+ "s"]} level={this.props.level}/>
+                                </table>
+                               
+                            </div>
+                        })}
+                    </div>
+                </div>
+            );
+        }
+        else {
+            return <div>Loading....</div>
+            
+        }
         
     }
 }
