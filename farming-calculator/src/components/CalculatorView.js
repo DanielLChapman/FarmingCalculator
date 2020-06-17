@@ -28,6 +28,9 @@ class CalculatorView extends Component {
                     if (x === 'cacti' || x.includes('special')) {
                         plants = this.state.plants[x];
                     }
+                    if (x === 'bush') {
+                        plants = this.state.plants[x + "es"];
+                    }
                     return <Patches
                     patches={this.state.patches[x]} 
                     plants={plants}

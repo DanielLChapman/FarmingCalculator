@@ -85,6 +85,46 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
     return currentExperience;
 }
 
+export const plantInitializationCalc = (patches = {}) => {
+    let planting = {
+        
+    };
+
+    Object.keys(patches).forEach((x) => {
+
+        /*
+
+            1. Load names (trees, spirittrees, etc) into a new object
+
+
+        */
+       let a = x.split('patches')[0];
+        let patches = {
+            
+        };
+
+        if (x !== "special_trees" && x !== "special_patches") {
+            planting[a] = {
+                patches: patches
+            }
+       } else {
+           
+           if (x === "special_patches") {
+               a = "special_patches";
+           }
+
+           planting[a] = {
+                patches: patches
+            }
+       }
+
+    });
+
+
+    return planting;
+
+}
+
 export const initialization = (patches = {}) => {
     /*
 
@@ -104,12 +144,16 @@ export const initialization = (patches = {}) => {
             },
 
     */
+    
    let returnObject = {};
 
    Object.keys(patches).forEach((x) => {
+       
        let a = x.split('patches')[0];
 
+       
        if (x !== "special_trees" && x !== "special_patches") {
+
             returnObject[a] = {
                 patches: {...patches[x]}
             }
@@ -118,6 +162,7 @@ export const initialization = (patches = {}) => {
            if (x === "special_patches") {
                a = "special_patches";
            }
+
            let r = patches[x];
            returnObject[a] = {
                 ...initialization(r)

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import './css/App.css';
 
-import {generateLevel, experienceCalculation, initialization} from './function';
+import {generateLevel, experienceCalculation, initialization,  plantInitializationCalc} from './function';
 
 //plants
 import ExperienceView from './components/ExperienceView';
 import CalculatorView from './components/CalculatorView';
+
 
 import {fruittrees, fruittreepatches} from './data/FruitTrees';
 import {trees, treepatches} from './data/Trees';
@@ -83,6 +84,7 @@ class App extends Component {
           }
         },
       },
+
       //data holders
       plants: {
         trees,
@@ -146,8 +148,10 @@ class App extends Component {
 
     if (!state.initialized) {
       let a = initialization(state.patches);
+      let b =  plantInitializationCalc(state.patches);
       state.initialized = true;
       state.organizedPatches = a;
+      state.planting = b;
     }
 
     this.setState({

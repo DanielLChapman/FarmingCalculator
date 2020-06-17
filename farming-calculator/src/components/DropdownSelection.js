@@ -34,12 +34,22 @@ class DropdownSelection extends Component {
             maxPerDay: 0,
 
         };
+        let converted = "";
+        let plants = this.props.plants;
         try {
             Object.keys(this.props.plants).forEach((x, i) => {
                 if (i === 0) {
                     state.selected = this.props.plants[x].name;
-                    let converted = convertName(state.selected);
-                    let plants = this.props.plants;
+
+                    converted = convertName(state.selected);
+                    
+                    if (converted === "grapes_(x12)") {
+                        converted = "grape";
+                    } else if (converted === "giant_seaweed_(x2)") {
+                        converted = "seaweed";
+                    }
+                   
+                    
 
                     state.level = plants[converted].level;
                     state.plant = plants[converted].planting;
@@ -50,7 +60,7 @@ class DropdownSelection extends Component {
                 }
              })
         } catch (err) {
-            console.log(this.props.plants);
+            console.log(plants);
         }   
         this.setState({...state});
     }
@@ -134,6 +144,7 @@ class DropdownSelection extends Component {
             
                 </td>
                 <td>
+                    {/* something to ignore level issues maybe, or add upgrade paths */}
                     {this.props.level >= this.state.level && (
                         <span>Level high enough</span>
                     )}
