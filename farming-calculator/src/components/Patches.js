@@ -41,7 +41,7 @@ class Patches extends Component {
                             return <div key={i}>
                                 {this.props.patches.patches[x]}
                                 <table>
-                                <DropdownWindow plants={this.props.plants} level={this.props.level}/>
+                                <DropdownWindow addToPlanting={this.props.addToPlanting} location={this.props.patches.patches[x]} named={this.props.named} plants={this.props.plants} level={this.props.level}/>
                                 </table>
                                
                             </div>
@@ -59,7 +59,7 @@ class Patches extends Component {
                             return <div key={i}>
                                 {capitalizeFirstLetter(x.split('tree')[0])}
                                 <table>
-                                <DropdownWindow plants={this.props.plants[x+ "s"]} level={this.props.level}/>
+                                <DropdownWindow addToPlanting={this.props.addToPlanting} location={capitalizeFirstLetter(x.split('tree')[0])} named={this.props.named} plants={this.props.plants[x+ "s"]} level={this.props.level}/>
                                 </table>
                                
                             </div>

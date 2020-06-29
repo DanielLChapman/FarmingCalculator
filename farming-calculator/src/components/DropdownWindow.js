@@ -39,6 +39,9 @@ class DropdownWindow extends Component {
                 <DropdownSelection
                     plants={this.props.plants}
                     level={this.props.level}
+                    location={this.props.location}
+                    named={this.props.named}
+                    addToPlanting={this.props.addToPlanting} 
                 />
             </tr>
             </tbody>

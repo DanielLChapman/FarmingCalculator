@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { experienceCalculation } from '../function';
 
 function convertName (name) {
     let newName = name.split(' ').join('_');
@@ -20,7 +19,7 @@ class DropdownSelection extends Component {
             check: "",
             harvest: "",
             maxPerDay: 0,
-            perDayAdd: 0,
+            perDayAdd: 1,
         };
     }
 
@@ -42,7 +41,7 @@ class DropdownSelection extends Component {
                     state.selected = this.props.plants[x].name;
 
                     converted = convertName(state.selected);
-                    
+
                     if (converted === "grapes_(x12)") {
                         converted = "grape";
                     } else if (converted === "giant_seaweed_(x2)") {
@@ -56,6 +55,7 @@ class DropdownSelection extends Component {
                     state.check = plants[converted].checking;
                     state.harvest = plants[converted].harvest;
                     state.maxPerDay = Math.floor(day/plants[converted].growth);
+                    
                     
                 }
              })
@@ -80,9 +80,38 @@ class DropdownSelection extends Component {
     }
 
     handleAdd = (event) => {
+        
         this.setState({perDayAdd: event.target.value})
     }
 
+    handleSubmit = (event) => {
+    
+        let c = {
+            patches: {
+    
+            },
+            location: convertName(this.props.location),
+            type: this.props.named
+
+        }
+        let converted = convertName(this.state.selected);
+
+        if (converted === "grapes_(x12)") {
+            converted = "grape";
+        } else if (converted === "giant_seaweed_(x2)") {
+            converted = "seaweed";
+        }
+
+        c.patches[convertName(this.props.location)] = {
+            numberPlanted: this.state.perDayAdd,
+            maxNumberPlanted: this.state.maxPerDay,
+            type: convertName(this.state.selected),
+            growth: this.props.plants[converted].growth,
+            planted: true
+        }
+
+        this.props.addToPlanting(c);
+    }
 
     render() {
         let a = [];
@@ -139,6 +168,7 @@ class DropdownSelection extends Component {
 
                                 return <option value={i+1} key={i}>{i+1}</option>
                             })}
+
                         </select>
                     
             
@@ -151,6 +181,7 @@ class DropdownSelection extends Component {
                     {this.props.level < this.state.level && (
                         <span>Level Too Low</span>
                     )}
+                    <button onClick={this.handleSubmit}>Add</button>
                     
                      
                 </td>

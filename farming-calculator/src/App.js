@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './css/App.css';
 
-import {generateLevel, experienceCalculation, initialization,  plantInitializationCalc} from './function';
+import {experienceCalculation, initialization} from './function';
 
 //plants
 import ExperienceView from './components/ExperienceView';
@@ -52,6 +52,8 @@ class App extends Component {
       goalLevel: 99,
       experienceNeeded: 13034431,
       timeModifier: 5,
+      pause: false,
+      timerUpdating: false,
 
       //should be added to when a plant is added to teh calculator
       planting: {
@@ -148,10 +150,8 @@ class App extends Component {
 
     if (!state.initialized) {
       let a = initialization(state.patches);
-      let b =  plantInitializationCalc(state.patches);
       state.initialized = true;
       state.organizedPatches = a;
-      state.planting = b;
     }
 
     this.setState({
@@ -165,12 +165,13 @@ class App extends Component {
 
     let newDay = false;
 
-    if (state.startCounting) {
+
+    if (state.startCounting && !state.pause) {
+      state.timerUpdating = true;
       state.minutes += state.timeModifier;
       if (state.minutes >= 60) {
-
-          state.minutes = state.minutes - 60;
-          state.hours++;
+          state.hours += Math.floor(state.minutes/60);
+          state.minutes = state.minutes%60;
       }
       if (state.hours === 24) {
           state.hours = 0;
@@ -179,20 +180,18 @@ class App extends Component {
       }
   
       //Calculations for each one
-
-
-      //trees
-      state.currentExperience = experienceCalculation(state.currentExperience, state.planting, state.plants, newDay, state.timeModifier);
+      let returnObject = experienceCalculation(0, state.planting, state.plants, newDay, state.timeModifier);
+      state.currentExperience += returnObject['experience'];
+      state.planting = returnObject.patches;
 
       if (state.days < 50) {
           setTimeout(() => {
               this.setState({...state});
-          }, 1);
+          }, 1000);
       } 
       if ((state.days >= 50 && !state.finalUpdate) || (state.currentExperience >= state.goalExperience) ) {
           state.finalUpdate = true;
           state.startCounting = false;
-          console.log(generateLevel(90, false));
           this.setState({
               ...state
           });
@@ -204,13 +203,14 @@ class App extends Component {
   setExperience = (experienceObject) => {
     let state = this.state;
 
-    state.currentExperience = experienceObject.currentExperience;
+    state.currentExperience += experienceObject.currentExperience;
     state.currentLevel = experienceObject.currentLevel;
     state.goalExperience = experienceObject.goalExperience;
     state.goalLevel = experienceObject.goalLevel;
+    state.pause = true;
 
     this.setState({
-      ...state
+      ...state 
     });
   
   }
@@ -236,12 +236,13 @@ class App extends Component {
   startTimer = () => {
     let state = this.state;
     
-    if (!state.startCounting) {
       state.minutes = 0;
       state.hours = 0;
       state.days = 0;
-    }
+    
     state.startCounting = !state.startCounting
+    state.timerUpdating = true;
+    state.pause = false;
     this.setState({...state});
   }
 
@@ -250,11 +251,47 @@ class App extends Component {
     switch (e.target.name) {
       case 'time':
         state.timeModifier = parseInt(e.target.value, 10);
+        state.pause = true;
+        break;
+      case 'pause':
+        state.pause = !state.pause;
         break;
       default:
+        state.pause = true;
         console.log(e.target.name);
     }
     this.setState({...state});
+  }
+
+  addToPlanting = (selectObject) => {
+    let s0 = selectObject;
+
+    let state = this.state;
+
+    try {
+      state.planting[s0.type].patches[s0.location] = {...s0.patches[s0.location]};
+    }
+    catch (err) {
+      state.planting[s0.type] = {
+        patches: {
+          ...s0.patches
+        }
+        
+      }
+    }
+    if (!state.pause) {
+      state.pause = true;
+    }
+    
+
+    this.setState({...state});
+
+    /*
+
+planting: {
+        trees: {
+          patches: {
+    */
   }
   render() {
 
@@ -265,21 +302,29 @@ class App extends Component {
             Minutes: {this.state.minutes} <br />
             Hours: {this.state.hours} <br />
             Days: {this.state.days} <br />
-            <button onClick={this.startTimer}>Start Calculation</button>
-            <label>
+            <button onClick={this.startTimer}>
+              {this.state.startCounting ? 'Res': 'S'}tart Calculation</button>
+            <label className="increment">
               Time Increment:
               <input type="number" name="time" value={this.state.timeModifier}  onChange={this.handleChange} max="60" min="1" />
+            </label>
+            <label className="pause">
+              <button name="pause" onClick={this.handleChange}>{this.state.pause ? 'Paused' : 'Pause'}</button>
             </label>
             
           </section>
           
           <section className="content-view">
             <ExperienceView 
-            
+              currentExperience={this.state.currentExperience}
               updateGoals={this.setExperience}/>
           </section>
           <section className="main-content">
-            <CalculatorView patches={this.state.organizedPatches} plants={this.state.plants} level={this.state.currentLevel} />
+            <CalculatorView 
+              patches={this.state.organizedPatches} 
+              plants={this.state.plants} 
+              level={this.state.currentLevel} 
+              addToPlanting={this.addToPlanting} />
           </section>
         </main> 
   

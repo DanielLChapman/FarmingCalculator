@@ -14,6 +14,19 @@ class ExperienceView extends Component {
         }
     }
 
+    static getDerivedStateFromProps(props, state) {
+        let currentExperience = props.currentExperience;
+        let currentLevel = generateLevel(currentExperience, false).currentLevel;
+        let a = state.goalExperience - currentExperience;
+        a >= 0 ? a =  state.goalExperience - currentExperience  : a = 0;
+
+        return {
+            currentExperience,
+            currentLevel,
+            experienceNeeded: a,
+        }
+    }
+
     handleChange = (e) => {
         let state = this.state;
         let target = parseInt(e.target.value, 10);
@@ -59,7 +72,7 @@ class ExperienceView extends Component {
         return (
             <section>
                 <label>
-                    Current Experience:
+                    Enter Current Experience:
                     <input type="number" 
                         name="currentExperience" 
                         value={this.state.currentExperience} 
@@ -68,7 +81,7 @@ class ExperienceView extends Component {
                         max="200000000" />
                 </label><br />
                 <label>
-                    Current Level:
+                    Enter Current Level:
                     <input type="number" 
                         name="currentLevel" 
                         value={this.state.currentLevel} 
@@ -77,7 +90,7 @@ class ExperienceView extends Component {
                         max="200" />
                 </label><br />
                 <label>
-                    Goal Expereince:
+                    Enter Goal Expereince:
                     <input type="number" 
                         name="goalExperience" 
                         value={this.state.goalExperience} 
@@ -86,7 +99,7 @@ class ExperienceView extends Component {
                         max="200000000" />
                 </label><br />
                 <label>
-                    Goal Level:
+                    Enter Goal Level:
                     <input type="number" 
                         name="goalLevel" 
                         value={this.state.goalLevel} 
@@ -100,6 +113,8 @@ class ExperienceView extends Component {
 
                 <br />
                 Experience Needed : {this.state.experienceNeeded}
+                <br />
+                Current Experience : {this.props.currentExperience}
             </section>
         );
     }
