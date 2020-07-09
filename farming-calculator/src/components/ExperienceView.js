@@ -11,27 +11,17 @@ class ExperienceView extends Component {
             goalExperience: 13034431,
             goalLevel: 99,
             experienceNeeded: 13034431,
-        }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        let currentExperience = props.currentExperience;
-        let currentLevel = generateLevel(currentExperience, false).currentLevel;
-        let a = state.goalExperience - currentExperience;
-        a >= 0 ? a =  state.goalExperience - currentExperience  : a = 0;
-
-        return {
-            currentExperience,
-            currentLevel,
-            experienceNeeded: a,
+            updated: false,
         }
     }
 
     handleChange = (e) => {
+        
         let state = this.state;
         let target = parseInt(e.target.value, 10);
         state[e.target.name] = target;
         let r;
+    
 
         if (e.target.name.includes('Experience')) {
             r = generateLevel(target, false);
@@ -47,10 +37,13 @@ class ExperienceView extends Component {
             state.goalLevel = r.currentLevel;
         }
 
+        
+
         let a = state.goalExperience - state.currentExperience;
         a >= 0 ? state.experienceNeeded = a : state.experienceNeeded = 0;
 
-        console.log(state.experienceNeeded);
+        state.updated = true;
+
 
         this.setState({...state});
         
@@ -70,51 +63,71 @@ class ExperienceView extends Component {
 
     render() {
         return (
-            <section>
-                <label>
-                    Enter Current Experience:
+            <section className="experience-view">
+                <div className="form-boxes">
+                <div className="fbd currentExperienceBox">
                     <input type="number" 
-                        name="currentExperience" 
-                        value={this.state.currentExperience} 
-                        onChange={this.handleChange}
-                        min="0"
-                        max="200000000" />
-                </label><br />
-                <label>
-                    Enter Current Level:
+                            name="currentExperience" 
+                            value={this.state.currentExperience} 
+                            onChange={this.handleChange}
+                            min="0"
+                            max="200000000" />
+                    <label>
+                        Enter Current Experience:
+                        
+                    </label>
+                </div>
+
+                <div className="fbd currentLevelBox">
+                 <input type="number" 
+                            name="currentLevel" 
+                            value={this.state.currentLevel} 
+                            onChange={this.handleChange}
+                            min="1"
+                            max="200" />    
+                    <label>
+                        Enter Current Level:
+                        
+                    </label>
+                </div>
+                <div className="fbd goalExperienceBox">
+                <input type="number" 
+                            name="goalExperience" 
+                            value={this.state.goalExperience} 
+                            onChange={this.handleChange}
+                            min="0"
+                            max="200000000" />
+                    <label>
+                        Enter Goal Expereince:
+                        
+                    </label>
+                </div>
+                <div className="fbd goalLevelBox">
                     <input type="number" 
-                        name="currentLevel" 
-                        value={this.state.currentLevel} 
-                        onChange={this.handleChange}
-                        min="1"
-                        max="200" />
-                </label><br />
-                <label>
-                    Enter Goal Expereince:
-                    <input type="number" 
-                        name="goalExperience" 
-                        value={this.state.goalExperience} 
-                        onChange={this.handleChange}
-                        min="0"
-                        max="200000000" />
-                </label><br />
-                <label>
-                    Enter Goal Level:
-                    <input type="number" 
-                        name="goalLevel" 
-                        value={this.state.goalLevel} 
-                        onChange={this.handleChange}
-                        min="2"
-                        max="200" />
-                </label><br />
+                            name="goalLevel" 
+                            value={this.state.goalLevel} 
+                            onChange={this.handleChange}
+                            min="2"
+                            max="200" />
+                    <label>
+                        Enter Goal Level:
+                        
+                    </label>
+                </div>
+                </div>
                 <button onClick={
                     this.handleSubmit
                 }>Submit</button>
 
-                <br />
-                Experience Needed : {this.state.experienceNeeded}
-                <br />
-                Current Experience : {this.props.currentExperience}
+
+                <span className="experience-needed">
+                    Experience Needed : {this.state.experienceNeeded}
+                </span>
+                <span className="current-experience">
+                    Current Experience : {this.props.currentExperience}
+                </span>
+
+                
             </section>
         );
     }

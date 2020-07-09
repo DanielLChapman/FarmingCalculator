@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import './css/App.css';
+import './css/right.css';
+import './css/left.css';
 
 import {experienceCalculation, initialization} from './function';
 
@@ -203,7 +205,7 @@ class App extends Component {
   setExperience = (experienceObject) => {
     let state = this.state;
 
-    state.currentExperience += experienceObject.currentExperience;
+    state.currentExperience = experienceObject.currentExperience;
     state.currentLevel = experienceObject.currentLevel;
     state.goalExperience = experienceObject.goalExperience;
     state.goalLevel = experienceObject.goalLevel;
@@ -298,36 +300,47 @@ planting: {
     return (
       <div className="App">
         <main className="App-content">
-          <section className="timer">
-            Minutes: {this.state.minutes} <br />
-            Hours: {this.state.hours} <br />
-            Days: {this.state.days} <br />
-            <button onClick={this.startTimer}>
-              {this.state.startCounting ? 'Res': 'S'}tart Calculation</button>
-            <label className="increment">
-              Time Increment:
-              <input type="number" name="time" value={this.state.timeModifier}  onChange={this.handleChange} max="60" min="1" />
-            </label>
-            <label className="pause">
-              <button name="pause" onClick={this.handleChange}>{this.state.pause ? 'Paused' : 'Pause'}</button>
-            </label>
+          <header><h2>Farming Simulator</h2></header>
+          
+          <section className="left-side">
+            <section className="content-view">
+              <ExperienceView 
+                currentExperience={this.state.currentExperience}
+                updateGoals={this.setExperience}/>
+            </section>
+            <section className="main-content">
+              <CalculatorView 
+                patches={this.state.organizedPatches} 
+                plants={this.state.plants} 
+                level={this.state.currentLevel} 
+                addToPlanting={this.addToPlanting} />
+            </section>
+          </section>
+          <section className="right-side">
+            <section className="timer">
+              Minutes: {this.state.minutes} <br />
+              Hours: {this.state.hours} <br />
+              Days: {this.state.days} <br />
+              <button onClick={this.startTimer}>
+                {this.state.startCounting ? 'Res': 'S'}tart Calculation</button>
+              
+              
+            </section>
+            <section className="time-increment">
+             <label className="increment">
+                Time Increment:
+                <input type="number" name="time" value={this.state.timeModifier}  onChange={this.handleChange} max="60" min="1" />
+              </label>
+            </section>
             
+              <label className="pause">
+                <button name="pause" onClick={this.handleChange}>{this.state.pause ? 'Paused' : 'Pause'}</button>
+              </label>
           </section>
           
-          <section className="content-view">
-            <ExperienceView 
-              currentExperience={this.state.currentExperience}
-              updateGoals={this.setExperience}/>
-          </section>
-          <section className="main-content">
-            <CalculatorView 
-              patches={this.state.organizedPatches} 
-              plants={this.state.plants} 
-              level={this.state.currentLevel} 
-              addToPlanting={this.addToPlanting} />
-          </section>
         </main> 
   
+
         
   
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
