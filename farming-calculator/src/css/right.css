@@ -1,3 +1,112 @@
 .right-side {
     font-size: 22px;
+    font-family: sans-serif;
+}
+.timer {
+    text-align: left;
+    margin-top: 5px;
+}
+.timer h6{
+    width: 80%;
+    left: 10%;
+    position: relative;
+    float: left;
+    border:1px solid black;
+    padding: 25px 5px;
+    margin: -5px;
+    color: #03e9f4;
+    font-size: 15px;
+}
+.right-side-timer-text {
+    float: right;
+    color: #fff;
+}
+
+.right-side button {
+    width: 80%;
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+    left: 10%;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid #03e9f4;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px
+    
+}
+
+button:hover {
+  background: #03e9f4;
+  color: #fff;
+}
+
+.pause button{
+    margin-left: -20%;
+    margin-top: -10px;
+
+}
+
+.increment {
+    font-size: 16px;
+    float: right;
+    width: 100%;
+    left: 10%;
+    position: relative;
+    margin: 15px 0px;
+
+}
+.increment span {
+    margin-right: 25px;
+    float: left;
+    color: #03e9f4;
+}
+
+/*
+td:nth-child(1), th:nth-child(1) {
+    display: none;
+}*/
+
+.outputView {
+    width: 100%;
+    min-height: 100px;
+    height: 100%;
+    margin-top: 15px;
+    text-align: left;;
+    border:1px solid red;
+}
+
+.totals {
+    width: 100%;
+    text-align: center;
+    color: #03e9f4;
+    padding: 0px;
+    margin: 15px 0px;
+    
+
+}
+ul {
+    list-style: none;
+    border:1px solid black;
+    margin: 0;
+    width: 100%;
+    font-size: 16px;
+    font-family: sans-serif;
+    padding: 20px;
+    padding-top: 0px;
+}
+
+li {
+    margin: 10px;
+}
+
+.right-span {
+    right: 65px;
+    position: relative;
+    float: right;
 }

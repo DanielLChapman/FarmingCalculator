@@ -8,6 +8,7 @@ import {experienceCalculation, initialization} from './function';
 //plants
 import ExperienceView from './components/ExperienceView';
 import CalculatorView from './components/CalculatorView';
+import OutputView from './components/OutputView';
 
 
 import {fruittrees, fruittreepatches} from './data/FruitTrees';
@@ -53,7 +54,7 @@ class App extends Component {
       currentLevel: 1,
       goalLevel: 99,
       experienceNeeded: 13034431,
-      timeModifier: 5,
+      timeModifier: 15,
       pause: false,
       timerUpdating: false,
 
@@ -185,18 +186,17 @@ class App extends Component {
       let returnObject = experienceCalculation(0, state.planting, state.plants, newDay, state.timeModifier);
       state.currentExperience += returnObject['experience'];
       state.planting = returnObject.patches;
-
-      if (state.days < 50) {
-          setTimeout(() => {
-              this.setState({...state});
-          }, 1000);
-      } 
-      if ((state.days >= 50 && !state.finalUpdate) || (state.currentExperience >= state.goalExperience) ) {
+      
+      if ((!state.finalUpdate) || (state.currentExperience >= state.goalExperience) ) {
           state.finalUpdate = true;
           state.startCounting = false;
           this.setState({
               ...state
           });
+      } else {
+        setTimeout(() => {
+          this.setState({...state});
+        }, 100);
       }
     }
     
@@ -316,11 +316,14 @@ planting: {
                 addToPlanting={this.addToPlanting} />
             </section>
           </section>
+
           <section className="right-side">
+
             <section className="timer">
-              Minutes: {this.state.minutes} <br />
-              Hours: {this.state.hours} <br />
-              Days: {this.state.days} <br />
+              <h6>
+              Minutes: <span className="right-side-timer-text">{this.state.minutes}</span></h6><br />
+              <h6>Hours: <span className="right-side-timer-text">{this.state.hours}</span></h6> <br />
+              <h6>Days: <span className="right-side-timer-text">{this.state.days}</span></h6> <br />
               <button onClick={this.startTimer}>
                 {this.state.startCounting ? 'Res': 'S'}tart Calculation</button>
               
@@ -328,7 +331,7 @@ planting: {
             </section>
             <section className="time-increment">
              <label className="increment">
-                Time Increment:
+                <span>Time Increment:</span>
                 <input type="number" name="time" value={this.state.timeModifier}  onChange={this.handleChange} max="60" min="1" />
               </label>
             </section>
@@ -336,6 +339,8 @@ planting: {
               <label className="pause">
                 <button name="pause" onClick={this.handleChange}>{this.state.pause ? 'Paused' : 'Pause'}</button>
               </label>
+
+              <OutputView />
           </section>
           
         </main> 

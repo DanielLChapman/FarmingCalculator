@@ -52,7 +52,11 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
                 typeToUse = plants[y];
         }
 
+
+        
+
         Object.keys(x).forEach((i) => {
+            let leftoverTime = 0;
             let plant = typeToUse[x[i].type];
             if (y === "special_patches") {
                 plant = typeToUse[x[i].type+"s"][x[i].type]
@@ -64,27 +68,37 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
             if (newDay) {
               x[i].numberPlanted = 0;
             }
-            if (x[i].numberPlanted > x[i].maxNumberPlanted) {
-              return null;
-            }
-            x[i].growth -= growthValue;
-            if (x[i].growth <= 0) {
+
+            let p = x[i];
+
+            if (p.planted) {
+                p.growth -= growthValue;
+                if (p.growth < 0) {
+                    leftoverTime = Math.abs(p.growth);
+                }
                 
-              currentExperience += plant.checking;
-              currentExperience += plant.harvest;
-              x[i].planted = false;
-              x[i].growth =  plant.growth;
-              console.log(`${x[i].type} done at location ${i}`);
+                if (p.growth <= 0) {
+                    console.log(`${x[i].type} done at location ${i}`);
+                    currentExperience += plant.checking;
+                    currentExperience += plant.harvest;
+                    p.planted = false;
+                    p.growth = plant.growth - leftoverTime;
+                }
+
+            } 
+            if (!p.planted && p.numberPlanted < p.maxNumberPlanted) {
+                p.planted = true;
+                p.numberPlanted += 1;
+                currentExperience += plant.planting;
+
+                console.log(`${x[i].type} planted at location ${i}`);
             }
-            if (!x[i].planted && x[i].numberPlanted <= x[i].maxNumberPlanted) {
-              x[i].planted = true;
-              x[i].numberPlanted += 1;
-              
-              currentExperience += plant.planting;
-              
-              
-              console.log(`${x[i].type} planted at location ${i}`);
+            else if (!p.planted) {
+                console.log(`waiting for new day at location ${i}`);
             }
+
+            x[i] = p;
+            
             
             
           });

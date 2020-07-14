@@ -103,11 +103,11 @@ class DropdownSelection extends Component {
         }
 
         c.patches[convertName(this.props.location)] = {
-            numberPlanted: this.state.perDayAdd,
-            maxNumberPlanted: this.state.maxPerDay,
+            numberPlanted: 0,
+            maxNumberPlanted: parseInt(this.state.perDayAdd, 10),
             type: convertName(this.state.selected),
             growth: this.props.plants[converted].growth,
-            planted: true
+            planted: false,
         }
 
         this.props.addToPlanting(c);
