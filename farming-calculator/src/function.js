@@ -34,6 +34,10 @@ export const generateLevel = (experience, level = false) => {
 
 export const experienceCalculation = (currentExperience = 0, patches, plants, newDay, growthValue = 1) => {
 
+    let whatWasPlanted = {
+
+    };
+
     Object.keys(patches).forEach((y) => {
         let x = patches[y].patches;
         //let x = state.planting.trees.patches;
@@ -52,7 +56,7 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
                 typeToUse = plants[y];
         }
 
-
+       
         
 
         Object.keys(x).forEach((i) => {
@@ -91,6 +95,7 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
                 p.numberPlanted += 1;
                 currentExperience += plant.planting;
 
+                whatWasPlanted[x[i].type] = whatWasPlanted[x[i].type] + 1 || 1;
                 console.log(`${x[i].type} planted at location ${i}`);
             }
             else if (!p.planted) {
@@ -105,14 +110,58 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
 
 
     });
+
     
 
     return {
         experience: currentExperience,
         patches: patches,
+        whatWasPlanted,
     };
 }
 
+export const resetPlanting = (inputPatches = {}, plants) => {
+    let patches = inputPatches;
+    Object.keys(patches).forEach((y) => {
+        let x = patches[y].patches;
+
+        let typeToUse = {};
+
+        switch (y) {
+            case 'bush':
+                typeToUse = plants['bushes']
+                break;
+            case 'cactus':
+                typeToUse = plants['cacti'];
+                break;
+            default:
+                typeToUse = plants[y];
+        }
+
+        Object.keys(x).forEach((i) => {
+            let leftoverTime = 0;
+            let plant = typeToUse[x[i].type];
+            if (y === "special_patches") {
+                plant = typeToUse[x[i].type+"s"][x[i].type]
+            }
+            if (y === "special_trees") {
+                plant = typeToUse[x[i].type+"trees"][x[i].type];
+            }
+        
+            let p = x[i];
+
+            p.planted = false;
+            p.growth = plant.growth;
+            p.numberPlanted = 0;
+            x[i] = p;
+
+          });
+
+
+    });
+
+    return patches;
+}
 export const plantInitializationCalc = (patches = {}) => {
     let planting = {
         

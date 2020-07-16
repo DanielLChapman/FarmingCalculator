@@ -3,12 +3,13 @@ import './css/App.css';
 import './css/right.css';
 import './css/left.css';
 
-import {experienceCalculation, initialization} from './function';
+import {experienceCalculation, initialization, resetPlanting} from './function';
 
 //plants
 import ExperienceView from './components/ExperienceView';
 import CalculatorView from './components/CalculatorView';
 import OutputView from './components/OutputView';
+import WhatsPlanted from './components/WhatsPlanted';
 
 
 import {fruittrees, fruittreepatches} from './data/FruitTrees';
@@ -57,37 +58,11 @@ class App extends Component {
       timeModifier: 15,
       pause: false,
       timerUpdating: false,
+      whatWasPlanted: {},
 
       //should be added to when a plant is added to teh calculator
       planting: {
-        trees: {
-          patches: {
-            /*
-            lumbridge: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'magic',
-              growth: trees['magic'].growth,
-              planted: false,
-              singlePlant: false,
-
-            },*/
-          }
-        },
-        fruittrees: {
-          patches: {
-            /*
-            stronghold: {
-              numberPlanted: 0,
-              maxNumberPlanted: 2,
-              type: 'dragonfruit',
-              growth: fruittrees['dragonfruit'].growth,
-              planted: false,
-              singlePlant: false
-
-            },*/
-          }
-        },
+        
       },
 
       //data holders
@@ -187,19 +162,33 @@ class App extends Component {
       state.currentExperience += returnObject['experience'];
       state.planting = returnObject.patches;
       
-      if ((!state.finalUpdate) || (state.currentExperience >= state.goalExperience) ) {
+
+      if (returnObject['whatWasPlanted'] && Object.keys(returnObject['whatWasPlanted']).length > 0) {
+          console.log('here');
+      }
+
+      if (Object.keys(state.planting).length === 0) {
+        alert('Nothing Planted');
+      } else {
+        if (state.currentExperience >= state.goalExperience) {
           state.finalUpdate = true;
           state.startCounting = false;
           this.setState({
               ...state
           });
-      } else {
-        setTimeout(() => {
-          this.setState({...state});
-        }, 100);
-      }
+        } else {
+          setTimeout(() => {
+            this.setState({...state});
+          }, 1000);
+        }
+      } 
+
+      /*
+
+      if final update, do something
+
+      */
     }
-    
   }
 
   setExperience = (experienceObject) => {
@@ -242,9 +231,10 @@ class App extends Component {
       state.hours = 0;
       state.days = 0;
     
-    state.startCounting = !state.startCounting
+    state.startCounting = !state.startCounting;
     state.timerUpdating = true;
     state.pause = false;
+    state.planting = resetPlanting(state.planting, state.plants)
     this.setState({...state});
   }
 
@@ -295,6 +285,13 @@ planting: {
           patches: {
     */
   }
+
+  updateAllPlanting = (data) => {
+    let state = this.state;
+    state.planting = data;
+    state.pause = true;
+    this.setState({...state});
+  }
   render() {
 
     return (
@@ -339,7 +336,9 @@ planting: {
               <label className="pause">
                 <button name="pause" onClick={this.handleChange}>{this.state.pause ? 'Paused' : 'Pause'}</button>
               </label>
-
+              <WhatsPlanted 
+                planted={this.state.planting}
+                updateAllPlanting={this.updateAllPlanting}/>
               <OutputView />
           </section>
           

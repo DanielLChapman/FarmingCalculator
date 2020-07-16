@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import DropdownWindow from './DropdownWindow';
 import {capitalizeFirstLetter} from './CalculatorView'
 
-function convertSpecial(name) {
+export const convertSpecial = (name) => {
     let a = name.split('_');
-    return capitalizeFirstLetter(a[0]) + " " + capitalizeFirstLetter(a[1])
+    let returnString = "";
+    a.length > 1 ? returnString = capitalizeFirstLetter(a[0]) + " " + capitalizeFirstLetter(a[1]) : returnString = capitalizeFirstLetter(a[0])
+    return returnString;
 };
 
 class Patches extends Component {
