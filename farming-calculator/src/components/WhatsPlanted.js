@@ -5,7 +5,7 @@ class WhatsPlanted extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            revealed: false
         };
     }
 
@@ -18,11 +18,21 @@ class WhatsPlanted extends Component {
         }
         this.props.updateAllPlanting(temp);
     }
+    switchRevealed = () => {
+        this.setState({
+            revealed: !this.state.revealed
+        })
+    }
     render() {
         let x = this.props.planted || {};
+        let y = {display: 'none'};
+        if (this.state.revealed) {
+            y = {display: 'block'}
+        };
         return (
-            <div  className="outputView">
-                <ul>
+            <div  className="what-was-planted">
+                <h6 className="what-was-planted-reveal" onClick={this.switchRevealed}>{this.state.revealed ? 'Hide' : 'View/Remove Whats Planted'}</h6>
+                <ul style={y}>
                     {Object.keys(x).map((y, i) => {
                         return (<React.Fragment key={i}>
                         <span key={i}>{convertSpecial(y)} </span><br />

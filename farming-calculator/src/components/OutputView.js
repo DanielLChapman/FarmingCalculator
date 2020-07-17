@@ -16,9 +16,9 @@ class OutputView extends Component {
         return (
             <div className="outputView">
                 {
-                    this.props.totalList && (
+                    this.props.whatWasPlanted && (
                         <Totals 
-                            totalList = {this.props.totalList}
+                            totals = {this.props.whatWasPlanted}
                         />
                     )
                 }

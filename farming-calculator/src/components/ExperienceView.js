@@ -15,6 +15,22 @@ class ExperienceView extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        let r;
+        let state = this.state;
+        if (nextProps.currentExperience !== this.state.currentExperience) {
+            r = generateLevel(nextProps.currentExperience, false);
+            state.currentExperience = r.currentExperience;
+            state.currentLevel = r.currentLevel;
+            let a = state.goalExperience - state.currentExperience;
+            a >= 0 ? state.experienceNeeded = a : state.experienceNeeded = 0;
+
+            this.setState({...state});
+
+        };
+        
+    }
+
     handleChange = (e) => {
         
         let state = this.state;

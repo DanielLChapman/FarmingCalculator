@@ -9,10 +9,10 @@ class Totals extends Component {
         return (
             <>
             <h6 className="totals">Totals</h6>
-            <ul>
-             {this.props.totalList && (
-                 this.props.totalList.map((element, i) => {
-                    return <li key={i}><span className="left-span">{element.type}</span>: <span className="right-span">{element.amount}</span></li>
+            <ul className="totals-ul">
+             {this.props.totals && (
+                 Object.keys(this.props.totals).map((element, i) => {
+                    return <li key={i}><span className="left-span">{element}</span>: <span className="right-span">{this.props.totals[element]}</span></li>
                  })
              )}
             </ul>

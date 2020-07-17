@@ -72,7 +72,7 @@ td:nth-child(1), th:nth-child(1) {
     display: none;
 }*/
 
-.outputView {
+.outputView, .what-was-planted {
     width: 100%;
     min-height: 100px;
     height: 100%;
@@ -96,17 +96,33 @@ ul {
     margin: 0;
     width: 100%;
     font-size: 16px;
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     padding: 20px;
     padding-top: 0px;
 }
 
 li {
     margin: 10px;
+    font-family: sans-serif;
+    cursor: pointer;
 }
+
 
 .right-span {
     right: 65px;
     position: relative;
     float: right;
+}
+
+.what-was-planted-reveal {
+    margin: 5px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #03e9f4;
+    font-family: 'Roboto';
+    cursor: pointer;
+}
+
+.totals-ul li .left-span {
+    text-transform: capitalize;
 }

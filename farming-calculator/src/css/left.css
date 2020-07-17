@@ -33,22 +33,15 @@
   }
   .form-boxes .fbd label {
     position: absolute;
-    top:0;
     left: 0;
+    top: -20px;
     padding: 10px 0;
-    font-size: 16px;
-    color: #fff;
+    color: #03e9f4;
+    font-size: 12px;
     pointer-events: none;
     transition: .5s;
   }
   
-  .form-boxes .fbd input:focus ~ label,
-  .form-boxes .fbd input:valid ~ label {
-    top: -20px;
-    left: 0;
-    color: #03e9f4;
-    font-size: 12px;
-  }
   .experience-view {
       text-align: left;
       
@@ -102,6 +95,7 @@
   .main-content h5 {
     font-size: 18px;
     color: #03e9f4;
+    cursor: pointer;
   }
 
   .sub-patches {

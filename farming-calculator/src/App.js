@@ -4,6 +4,7 @@ import './css/right.css';
 import './css/left.css';
 
 import {experienceCalculation, initialization, resetPlanting} from './function';
+import {generateLevel } from './function';
 
 //plants
 import ExperienceView from './components/ExperienceView';
@@ -161,11 +162,14 @@ class App extends Component {
       let returnObject = experienceCalculation(0, state.planting, state.plants, newDay, state.timeModifier);
       state.currentExperience += returnObject['experience'];
       state.planting = returnObject.patches;
-      
+      let r;
+      r = generateLevel(state.currentExperience, false);
+      state.currentLevel = r.currentLevel;
 
-      if (returnObject['whatWasPlanted'] && Object.keys(returnObject['whatWasPlanted']).length > 0) {
-          console.log('here');
-      }
+      Object.keys(returnObject.whatWasPlanted).forEach((x) => {
+        state.whatWasPlanted[x] = state.whatWasPlanted[x] + returnObject.whatWasPlanted[x] || returnObject.whatWasPlanted[x];
+      })
+    
 
       if (Object.keys(state.planting).length === 0) {
         alert('Nothing Planted');
@@ -179,7 +183,7 @@ class App extends Component {
         } else {
           setTimeout(() => {
             this.setState({...state});
-          }, 1000);
+          }, 100);
         }
       } 
 
@@ -234,6 +238,7 @@ class App extends Component {
     state.startCounting = !state.startCounting;
     state.timerUpdating = true;
     state.pause = false;
+    state.whatWasPlanted = {};
     state.planting = resetPlanting(state.planting, state.plants)
     this.setState({...state});
   }
@@ -296,6 +301,7 @@ planting: {
 
     return (
       <div className="App">
+        
         <main className="App-content">
           <header><h2>Farming Simulator</h2></header>
           
@@ -303,7 +309,7 @@ planting: {
             <section className="content-view">
               <ExperienceView 
                 currentExperience={this.state.currentExperience}
-                updateGoals={this.setExperience}/>
+                updateGoals={this.setExperience} />
             </section>
             <section className="main-content">
               <CalculatorView 
@@ -339,7 +345,8 @@ planting: {
               <WhatsPlanted 
                 planted={this.state.planting}
                 updateAllPlanting={this.updateAllPlanting}/>
-              <OutputView />
+              <OutputView 
+                whatWasPlanted={this.state.whatWasPlanted}/>
           </section>
           
         </main> 

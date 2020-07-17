@@ -82,7 +82,7 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
                 }
                 
                 if (p.growth <= 0) {
-                    console.log(`${x[i].type} done at location ${i}`);
+                    //console.log(`${x[i].type} done at location ${i}`);
                     currentExperience += plant.checking;
                     currentExperience += plant.harvest;
                     p.planted = false;
@@ -96,10 +96,10 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
                 currentExperience += plant.planting;
 
                 whatWasPlanted[x[i].type] = whatWasPlanted[x[i].type] + 1 || 1;
-                console.log(`${x[i].type} planted at location ${i}`);
+                //console.log(`${x[i].type} planted at location ${i}`);
             }
             else if (!p.planted) {
-                console.log(`waiting for new day at location ${i}`);
+                //console.log(`waiting for new day at location ${i}`);
             }
 
             x[i] = p;
@@ -139,7 +139,6 @@ export const resetPlanting = (inputPatches = {}, plants) => {
         }
 
         Object.keys(x).forEach((i) => {
-            let leftoverTime = 0;
             let plant = typeToUse[x[i].type];
             if (y === "special_patches") {
                 plant = typeToUse[x[i].type+"s"][x[i].type]
