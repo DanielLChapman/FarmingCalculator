@@ -120,6 +120,7 @@ class App extends Component {
       },
       organizedPatches: {
       },
+      rightOpen: false,
     }
   }
 
@@ -297,13 +298,27 @@ planting: {
     state.pause = true;
     this.setState({...state});
   }
+
+  openRight = () => {
+    this.setState({
+      rightOpen: !this.state.rightOpen
+    })
+  };
+
   render() {
+    let rightStyle= {};
+    if (this.state.rightOpen) {
+      rightStyle = {display: 'block'};
+    }
 
     return (
       <div className="App">
         
         <main className="App-content">
-          <header><h2>Farming Simulator</h2></header>
+          <header>
+            <h3>Farming Simulator</h3>
+            <div className="openRight" onClick={this.openRight}>{this.state.rightOpen ? 'Close' : 'Calculations'}</div>
+          </header>
           
           <section className="left-side">
             <section className="content-view">
@@ -320,7 +335,7 @@ planting: {
             </section>
           </section>
 
-          <section className="right-side">
+          <section className="right-side"  style={rightStyle}>
 
             <section className="timer">
               <h6>
@@ -363,3 +378,4 @@ planting: {
 }
 
 export default App;
+

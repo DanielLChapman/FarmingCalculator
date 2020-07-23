@@ -89,6 +89,7 @@
 
   .main-content {
       left: 5%;
+      z-index: 1;
       position: relative;
   }
 

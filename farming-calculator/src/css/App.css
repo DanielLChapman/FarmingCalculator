@@ -25,6 +25,7 @@ header {
   padding: 0;
   color: #fff;
   text-align: center;
+  z-index: 5;
 
 }
 
@@ -35,6 +36,12 @@ header {
   right: 0;
   top: 50px;
   text-align: center;
+  z-index: 6;
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #282c34;
+
 }
 
 .left-side {
@@ -46,7 +53,17 @@ header {
   border:1px solid red;
 }
 
-.main-content h5 {
-  font-size: 16px;
-  color: #03e9f4;
+@media screen and (max-width: 1024px) {
+  .left-side {
+    width: 100%;
+  }
+  .right-side {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 614px) {
+  .right-side {
+    width: 100%;
+  }
 }
