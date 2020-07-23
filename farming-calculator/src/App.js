@@ -6,13 +6,9 @@ import './css/left.css';
 import {experienceCalculation, initialization, resetPlanting} from './function';
 import {generateLevel } from './function';
 
+import Visuals from './components/Visuals';
+
 //plants
-import ExperienceView from './components/ExperienceView';
-import CalculatorView from './components/CalculatorView';
-import OutputView from './components/OutputView';
-import WhatsPlanted from './components/WhatsPlanted';
-
-
 import {fruittrees, fruittreepatches} from './data/FruitTrees';
 import {trees, treepatches} from './data/Trees';
 import {spirittrees, spirittreepatches} from './data/SpiritTrees';
@@ -120,7 +116,6 @@ class App extends Component {
       },
       organizedPatches: {
       },
-      rightOpen: false,
     }
   }
 
@@ -144,7 +139,6 @@ class App extends Component {
     let state = this.state;
 
     let newDay = false;
-
 
     if (state.startCounting && !state.pause) {
       state.timerUpdating = true;
@@ -299,79 +293,32 @@ planting: {
     this.setState({...state});
   }
 
-  openRight = () => {
-    this.setState({
-      rightOpen: !this.state.rightOpen
-    })
-  };
+  
 
   render() {
-    let rightStyle= {};
-    if (this.state.rightOpen) {
-      rightStyle = {display: 'block'};
-    }
+    
 
     return (
-      <div className="App">
-        
-        <main className="App-content">
-          <header>
-            <h3>Farming Simulator</h3>
-            <div className="openRight" onClick={this.openRight}>{this.state.rightOpen ? 'Close' : 'Calculations'}</div>
-          </header>
-          
-          <section className="left-side">
-            <section className="content-view">
-              <ExperienceView 
-                currentExperience={this.state.currentExperience}
-                updateGoals={this.setExperience} />
-            </section>
-            <section className="main-content">
-              <CalculatorView 
-                patches={this.state.organizedPatches} 
-                plants={this.state.plants} 
-                level={this.state.currentLevel} 
-                addToPlanting={this.addToPlanting} />
-            </section>
-          </section>
-
-          <section className="right-side"  style={rightStyle}>
-
-            <section className="timer">
-              <h6>
-              Minutes: <span className="right-side-timer-text">{this.state.minutes}</span></h6><br />
-              <h6>Hours: <span className="right-side-timer-text">{this.state.hours}</span></h6> <br />
-              <h6>Days: <span className="right-side-timer-text">{this.state.days}</span></h6> <br />
-              <button onClick={this.startTimer}>
-                {this.state.startCounting ? 'Res': 'S'}tart Calculation</button>
-              
-              
-            </section>
-            <section className="time-increment">
-             <label className="increment">
-                <span>Time Increment:</span>
-                <input type="number" name="time" value={this.state.timeModifier}  onChange={this.handleChange} max="60" min="1" />
-              </label>
-            </section>
-            
-              <label className="pause">
-                <button name="pause" onClick={this.handleChange}>{this.state.pause ? 'Paused' : 'Pause'}</button>
-              </label>
-              <WhatsPlanted 
-                planted={this.state.planting}
-                updateAllPlanting={this.updateAllPlanting}/>
-              <OutputView 
-                whatWasPlanted={this.state.whatWasPlanted}/>
-          </section>
-          
-        </main> 
-  
-
-        
-  
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-      </div>
-  
+      <Visuals 
+        currentExperience={this.state.currentExperience}
+        setExperience={this.setExperience}
+        organizedPatches={this.state.organizedPatches}
+        plants={this.state.plants}
+        level={this.state.currentLevel}
+        addToPlanting={this.addToPlanting}
+        minutes={this.state.minutes}
+        hours={this.state.hours}
+        days={this.state.days}
+        startTimer={this.startTimer}
+        startcounting={this.state.startCounting}
+        timeModifier={this.state.timeModifier}
+        handleChange={this.handleChange}
+        pause={this.state.pause}
+        planting={this.state.planting}
+        updateAllPlanting={this.updateAllPlanting}
+        whatWasPlanted={this.state.whatWasPlanted}
+      
+        />
     );
   }
   
