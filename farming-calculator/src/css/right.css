@@ -138,14 +138,14 @@ li {
 .openRight {
     z-index: 5;
     position: absolute;
-    right: 10px;
-    top: 31px;
+    right: 25px;
+    top: 34px;
     font-size: 31;
     display: none;
     
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1175px) {
     .openRight {
         display: block;
     }
@@ -160,3 +160,8 @@ li {
         right: 0;
     }
   }
+@media screen and (max-width: 459px ) {
+    .openRight {
+        top: 61px;
+    }
+}
