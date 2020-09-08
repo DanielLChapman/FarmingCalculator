@@ -37,13 +37,15 @@ class WhatsPlanted extends Component {
                         return (<React.Fragment key={i}>
                         <span key={i}>{convertSpecial(y)} </span><br />
                         
-                        {
+                        {x[y]['patches'] && (
                             Object.keys(x[y]['patches']).map((p, i) => {
                                 return (
                                     <li key={i}>{convertSpecial(p)}<span className="right-span"
                                     onClick={() => {this.removeFromPlanting({y, p})}}>X</span></li>
                                 )
-                            })
+                            }
+                        ))
+                           
                         }
                         </React.Fragment>
                         )

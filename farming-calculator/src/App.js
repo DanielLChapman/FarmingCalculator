@@ -310,7 +310,7 @@ planting: {
         hours={this.state.hours}
         days={this.state.days}
         startTimer={this.startTimer}
-        startcounting={this.state.startCounting}
+        startCounting={this.state.startCounting}
         timeModifier={this.state.timeModifier}
         handleChange={this.handleChange}
         pause={this.state.pause}

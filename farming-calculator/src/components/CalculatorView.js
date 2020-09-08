@@ -12,7 +12,7 @@ class CalculatorView extends Component {
         this.state = {patches: {}, plants: {}}
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
 
         // This will erase any local state updates!
         // Do not do this.

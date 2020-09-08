@@ -15,7 +15,7 @@ class ExperienceView extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let r;
         let state = this.state;
         if (nextProps.currentExperience !== this.state.currentExperience) {
