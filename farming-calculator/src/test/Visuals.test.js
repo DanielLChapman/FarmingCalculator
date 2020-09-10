@@ -76,4 +76,58 @@ describe('<Visuals /> UI', () => {
     expect(container.find('OutputView').length.to == 1);
   })
 
+  it('should update state when clicked on openRight', () => {
+
+    let c = container.find('.openRight');
+    expect(c.text()).toEqual('Close');
+    container.find('.openRight').simulate('click');
+    expect(c.text()).toEqual('Start Window');
+  });
+
+  it('should alert if nothing is planted when starting calculation', () => {
+    global.alert = jest.fn();
+    let c = container.find('.startTimer');
+    expect(c.text()).toEqual('Start Calculation');
+
+    container.find('.startTimer').simulate('click');
+
+    expect(c.text()).toEqual('Start Calculation');
+
+  });
+
+  it('should be able to click on pause to pause', () => {
+    expect(container.props()['pause']).toBe === false;
+    container.find('.pause').simulate('click');
+    expect(container.props()['pause']).toBe === true;
+
+  });
+
+  it('changes the time modifier', () => {
+    expect(container.props()['timeModifier']).toBe === 15;
+    let c = container.find('.increment').find('input');
+    c.simulate('change', { target: { value: 5}});
+    expect(container.props()['timeModifier']).toBe === 5;
+  });
+
+  it('starts timer', () => {
+    
+    //bonus of making sure add to planting works!
+    let temp = mount((<App />)   );
+    let c = temp.find('Visuals');
+    let buttons = c.find('.special-button').at(0);
+    buttons.simulate('click');
+
+    let p = c.find('.startTimer');
+    expect(p.text()).toEqual('Start Calculation');
+
+    c.find('.startTimer').simulate('click');
+
+    expect(p.text()).toEqual('Restart Calculation');
+    expect(c.find('#timer-minutes')).toBe !== 0;
+
+    c.find('.startTimer').simulate('click');
+    
+
+  })
+
 })

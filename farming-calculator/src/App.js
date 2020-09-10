@@ -166,9 +166,7 @@ class App extends Component {
       })
     
 
-      if (Object.keys(state.planting).length === 0) {
-        alert('Nothing Planted');
-      } else {
+      if (Object.keys(state.planting).length > 0) {
         if (state.currentExperience >= state.goalExperience) {
           state.finalUpdate = true;
           state.startCounting = false;
@@ -224,18 +222,23 @@ class App extends Component {
   }
 */
   startTimer = () => {
-    let state = this.state;
+    if (Object.keys(this.state.planting).length > 0) {
+      let state = this.state;
     
       state.minutes = 0;
       state.hours = 0;
       state.days = 0;
     
-    state.startCounting = !state.startCounting;
-    state.timerUpdating = true;
-    state.pause = false;
-    state.whatWasPlanted = {};
-    state.planting = resetPlanting(state.planting, state.plants)
-    this.setState({...state});
+      state.startCounting = !state.startCounting;
+      state.timerUpdating = true;
+      state.pause = false;
+      state.whatWasPlanted = {};
+      state.planting = resetPlanting(state.planting, state.plants)
+      this.setState({...state});
+    } else {
+      alert('Nothing is planted');
+    }
+    
   }
 
   handleChange = (e) => {
@@ -246,6 +249,9 @@ class App extends Component {
         state.pause = true;
         break;
       case 'pause':
+        if (state.startCounting && Object.keys(state.planting).length === 0) {
+          state.startCounting = false;
+        } 
         state.pause = !state.pause;
         break;
       default:
