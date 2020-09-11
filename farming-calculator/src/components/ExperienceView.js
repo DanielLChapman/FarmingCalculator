@@ -37,15 +37,14 @@ class ExperienceView extends Component {
         let target = parseInt(e.target.value, 10);
         state[e.target.name] = target;
         let r;
-    
 
-        if (e.target.name.includes('Experience')) {
+        if (e.target.name && e.target.name.includes('Experience')) {
             r = generateLevel(target, false);
         } else {
             r = generateLevel(target, true);
         }
 
-        if (e.target.name.includes('current')) {
+        if (e.target.name && e.target.name.includes('current')) {
             state.currentExperience = r.currentExperience;
             state.currentLevel = r.currentLevel;
         } else {
