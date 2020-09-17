@@ -9,6 +9,25 @@ export const convertSpecial = (name) => {
     return returnString;
 };
 
+export const pluralize = (name) => {
+    switch(name) {
+        case 'Fruittree':
+            return 'Fruit Trees';
+        case 'Bush':
+            return 'Bushes';
+        case 'Spirittree':
+            return 'Spirit Trees';
+        case 'Special Trees':
+            return name;
+        case 'Special Patches':
+            return name;
+        case 'Cacti':
+            return name;
+        default:
+            return name+"s";
+    }
+}
+
 class Patches extends Component {
 
     constructor(props) {
@@ -36,7 +55,7 @@ class Patches extends Component {
         if (this.props.patches.patches && Object.keys(this.props.patches.patches).length > 0) {
             return (
                 <div>
-                    <h5 onClick={this.handleClick}>{this.props.name}</h5>
+                    <h5 onClick={this.handleClick}>{pluralize(this.props.name)}</h5>
                     <div className="sub-patches" style={displayValue}>
                         
                         {Object.keys(this.props.patches.patches).map((x, i) => {
@@ -55,7 +74,7 @@ class Patches extends Component {
         } else if(this.props.patches && Object.keys(this.props.patches).length > 0) { 
             return (
                 <div>
-                    <h5 onClick={this.handleClick}>{convertSpecial(this.props.name)}</h5>
+                    <h5 onClick={this.handleClick}>{pluralize(convertSpecial(this.props.name))}</h5>
                     <div className="sub-patches" style={displayValue}>
                     {Object.keys(this.props.patches).map((x, i) => {
                             return <div key={i}>

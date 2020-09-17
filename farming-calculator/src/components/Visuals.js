@@ -59,8 +59,8 @@ class Visuals extends Component {
                     <h6 id="timer-hours">Hours: <span className="right-side-timer-text">{this.props.hours}</span></h6> <br />
                     <h6 id="timer-days">Days: <span className="right-side-timer-text">{this.props.days}</span></h6> <br />
                     <button className="startTimer" onClick={this.props.startTimer}>
-                        {this.props.startCounting ? 'Res': 'S'}tart Calculation</button>
-                    
+                        {this.props.startCounting ? 'Res': 'S'}tart Calculation
+                    </button>
                     
                     </section>
                     <section className="time-increment">
