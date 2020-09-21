@@ -18,12 +18,14 @@ it('renders without crashing', () => {
 test('Renders a Visual Component', () => {
     const getByText = shallow(<DropdownWindow />);
 
-    expect(getByText.find('Option'));
-    expect(getByText.find('Level'));
-    expect(getByText.find('Planting Exp'));
-    expect(getByText.find('Checking Exp'));
-    expect(getByText.find('Harvest Exp'));
-    expect(getByText.find('Per Day'));
-    expect(getByText.find('Submit'));
+    expect(getByText.find('th').at(0).text()).toBe === 'Option';
+    expect(getByText.find('th').at(1).text()).toBe === 'Level';
+    expect(getByText.find('th').at(2).text()).toBe === 'Planting Exp';
+    expect(getByText.find('th').at(3).text()).toBe === 'Checking Exp';
+    expect(getByText.find('th').at(4).text()).toBe === 'Harvest Exp';
+    expect(getByText.find('th').at(5).text()).toBe === '# Per Day';
+    expect(getByText.find('th').at(6).text()).toBe === 'Submit';
+
+    expect(getByText.find('DropdownSelection'));
 
 });
