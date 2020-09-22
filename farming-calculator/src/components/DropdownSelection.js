@@ -175,10 +175,10 @@ class DropdownSelection extends Component {
                 </td>
                 <td>
                     {/* something to ignore level issues maybe, or add upgrade paths */}
-                    {this.props.level >= this.state.level && (
+                    {parseInt(this.props.level, 10) >= parseInt(this.state.level, 10) && (
                         <button className="special-button" onClick={this.handleSubmit}>Add</button>
                     )}
-                    {this.props.level < this.state.level && (
+                    {parseInt(this.props.level, 10) < parseInt(this.state.level, 10) && (
                         <span>Level Too Low <br/><button onClick={this.handleSubmit}>Add Anyways</button></span>
                     )}
                     

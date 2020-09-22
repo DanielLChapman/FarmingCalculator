@@ -53,9 +53,25 @@ it('handles submitting', () => {
   let c = container.find('DropdownSelection').at(0);
   c.find('button').simulate('click');
   container.update();
-  
+
   expect(Object.keys(container.state()['planting']).length).toBe === 1;
   expect(Object.keys(container.state()['planting'])).toBe === 'trees';
   expect(Object.keys(container.state()['planting']['trees'])).toBe === 'patches';
   expect(Object.keys(container.state()['planting']['trees']['patches'])).toBe === 'falador_park';
+})
+
+it('conditional renders level', () => {
+  const container = mount(<App />);
+  let c = container.find('DropdownSelection').at(0);
+  expect(c.find('td').at(6).find('span').text()).toBe === "Level Too Low Add Anyways";
+  
+  c = container.find('.currentExperienceBox').find('input');
+  c.simulate('change', { target: { value: 840000, name: 'Experience'}});
+  let button = container.find('ExperienceView').find('button').at(0);
+  button.simulate('click');
+
+  container.update();
+  c = container.find('DropdownSelection').at(0);
+  expect(c.find('td').at(6).find('span').text()).toBe === "Add";
+  
 })
