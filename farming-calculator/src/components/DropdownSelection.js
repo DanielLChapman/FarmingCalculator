@@ -122,6 +122,9 @@ class DropdownSelection extends Component {
         for (let i = 0; i < this.state.maxPerDay; i++) {
             a.push(i);
         }
+        if (this.state.maxPerDay === 0) {
+            a.push(1);
+        }
         
         if (this.props.plants) {
             return (
@@ -162,7 +165,7 @@ class DropdownSelection extends Component {
                 <td>
                      { Math.floor(this.state.harvest*100)/100 }
                 </td>
-                <td>
+                <td testing={'#perday'}>
                         <select value={this.state.perDayAdd} onChange={this.handleAdd}>
                             {a.map((x, i) => {
 

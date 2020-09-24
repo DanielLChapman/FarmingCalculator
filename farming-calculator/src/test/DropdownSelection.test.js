@@ -75,3 +75,22 @@ it('conditional renders level', () => {
   expect(c.find('td').at(6).find('span').text()).toBe === "Add";
   
 })
+
+it ('converts special names', () => {
+    const { queryByText } = render(<App />);
+
+    expect(queryByText('Grape')).toBeInTheDocument();
+    expect(queryByText('Seaweed')).toBeInTheDocument();
+    expect(queryByText('giant_seaweed_(x2)')).not.toBeInTheDocument();
+    expect(queryByText('hespori')).not.toBeInTheDocument();
+
+})
+
+it ('makes sure all # per day has a min value', () => {
+    const container = mount(<App />);
+    let c = container.find({testing: '#perday'});
+    for (let x = 0; x < c.length; x++) {
+        let p = c.at(x).find('option') || 0;
+        expect(p.length).toBeGreaterThanOrEqual(1);
+    }
+})
