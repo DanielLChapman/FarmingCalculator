@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 .content-view {
     width: 100%;
-    border:1px solid orange;
+    border-bottom:1px solid orange;
     top: 10px;
+    padding-bottom: 15px;
 
 
     box-sizing: border-box;
@@ -11,7 +12,6 @@
 
 .form-boxes {
     height: 300px;
-    border:1px solid purple;
 }
 .form-boxes .fbd {
     position: relative;
