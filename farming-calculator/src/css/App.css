@@ -32,7 +32,7 @@ header {
 .right-side {
   position: absolute;
   width: 300px;
-  border-left: 1px solid green;
+  border-left: 1px solid #424242;
   right: 0;
   top: 0px;
   text-align: center;
