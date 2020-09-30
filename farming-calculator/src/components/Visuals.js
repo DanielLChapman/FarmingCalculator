@@ -32,7 +32,7 @@ class Visuals extends Component {
                 
                 <main className="App-content">
                 <header>
-                    <h3>Farming Simulator</h3>
+                    <h1>Farming Simulator</h1>
                     <div className="openRight" onClick={this.openRight}>{this.state.rightOpen ? 'Close' : 'Start Window'}</div>
                 </header>
                 
