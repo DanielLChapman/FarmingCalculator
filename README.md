@@ -21,6 +21,7 @@ To Use:
 To Do:
 
 * Bugs:
-    * Mahogany causes crashes
+    * ~Mahogany causes crashes~
 * Add: 
     * Set all options the same
+    * ~Refactor function typeToUse and Plants for DRY~

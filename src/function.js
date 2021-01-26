@@ -1,5 +1,6 @@
 export const generateLevel = (experience, level = false) => {
 
+    
 
     let points = 0;
     let output = 0;
@@ -15,7 +16,7 @@ export const generateLevel = (experience, level = false) => {
 
     for (let lvl = 1; lvl <= maxlevel; lvl++)
     {
-    
+    //osrs level formula
     points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7.));
     if (level && lvl === experience) {
         returnObject.currentExperience = output;
@@ -32,6 +33,41 @@ export const generateLevel = (experience, level = false) => {
     
 }
 
+const getTypeToUse = (plants, y) => {
+
+    let typeToUse = {};
+
+    switch (y) {
+        case 'bush':
+            typeToUse = plants['bushes']
+            break;
+        case 'cactus':
+            typeToUse = plants['cacti'];
+            break;
+        default:
+            typeToUse = plants[y];
+    }
+
+    return typeToUse;
+}
+
+const getPlant = (plants, y, x, i, typeToUse) => {
+
+    let plant = typeToUse[x[i].type];
+    if (y === "special_patches") {
+        plant = typeToUse[x[i].type+"s"][x[i].type]
+    }
+    if (y === "special_trees") {
+        if (x[i].type === "teak" || x[i].type === "mahogany") {
+            plant = typeToUse["hardwoodtrees"][x[i].type];
+        }else {
+            plant = typeToUse[x[i].type+"trees"][x[i].type];
+        }
+        
+    }
+
+    return plant;
+}
 export const experienceCalculation = (currentExperience = 0, patches, plants, newDay, growthValue = 1) => {
 
     let whatWasPlanted = {
@@ -43,36 +79,13 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
         //let x = state.planting.trees.patches;
         //Max per day isn't being used;
 
-        let typeToUse = {};
-
-        switch (y) {
-            case 'bush':
-                typeToUse = plants['bushes']
-                break;
-            case 'cactus':
-                typeToUse = plants['cacti'];
-                break;
-            default:
-                typeToUse = plants[y];
-        }
-
-       
+        let typeToUse = getTypeToUse(plants, y);
         
 
         Object.keys(x).forEach((i) => {
             let leftoverTime = 0;
-            let plant = typeToUse[x[i].type];
-            if (y === "special_patches") {
-                plant = typeToUse[x[i].type+"s"][x[i].type]
-            }
-            if (y === "special_trees") {
-                if (x[i].type === "teak" || x[i].type === "mahogany") {
-                    plant = typeToUse["hardwoodtrees"][x[i].type];
-                }else {
-                    plant = typeToUse[x[i].type+"trees"][x[i].type];
-                }
-                
-            }
+            
+            let plant = getPlant(plants, y, x, i, typeToUse);
             
             if (newDay) {
               x[i].numberPlanted = 0;
@@ -130,33 +143,10 @@ export const resetPlanting = (inputPatches = {}, plants) => {
     Object.keys(patches).forEach((y) => {
         let x = patches[y].patches;
 
-        let typeToUse = {};
-
-        console.log(y);
-        switch (y) {
-            case 'bush':
-                typeToUse = plants['bushes']
-                break;
-            case 'cactus':
-                typeToUse = plants['cacti'];
-                break;
-            default:
-                typeToUse = plants[y];
-        }
+        let typeToUse = getTypeToUse(plants, y);
 
         Object.keys(x).forEach((i) => {
-            let plant = typeToUse[x[i].type];
-            if (y === "special_patches") {
-                plant = typeToUse[x[i].type+"s"][x[i].type]
-            }
-            if (y === "special_trees") {
-                if (x[i].type === "teak" || x[i].type === "mahogany") {
-                    plant = typeToUse["hardwoodtrees"][x[i].type];
-                }else {
-                    plant = typeToUse[x[i].type+"trees"][x[i].type];
-                }
-                
-            }
+            let plant = getPlant(plants, y, x, i, typeToUse);
         
             let p = x[i];
 
