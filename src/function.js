@@ -66,7 +66,12 @@ export const experienceCalculation = (currentExperience = 0, patches, plants, ne
                 plant = typeToUse[x[i].type+"s"][x[i].type]
             }
             if (y === "special_trees") {
-                plant = typeToUse[x[i].type+"trees"][x[i].type];
+                if (x[i].type === "teak" || x[i].type === "mahogany") {
+                    plant = typeToUse["hardwoodtrees"][x[i].type];
+                }else {
+                    plant = typeToUse[x[i].type+"trees"][x[i].type];
+                }
+                
             }
             
             if (newDay) {
@@ -127,6 +132,7 @@ export const resetPlanting = (inputPatches = {}, plants) => {
 
         let typeToUse = {};
 
+        console.log(y);
         switch (y) {
             case 'bush':
                 typeToUse = plants['bushes']
@@ -144,7 +150,12 @@ export const resetPlanting = (inputPatches = {}, plants) => {
                 plant = typeToUse[x[i].type+"s"][x[i].type]
             }
             if (y === "special_trees") {
-                plant = typeToUse[x[i].type+"trees"][x[i].type];
+                if (x[i].type === "teak" || x[i].type === "mahogany") {
+                    plant = typeToUse["hardwoodtrees"][x[i].type];
+                }else {
+                    plant = typeToUse[x[i].type+"trees"][x[i].type];
+                }
+                
             }
         
             let p = x[i];

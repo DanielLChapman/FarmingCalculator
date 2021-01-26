@@ -151,6 +151,10 @@ class App extends Component {
           state.hours = 0;
           state.days++;
           newDay = true;
+      } else if (state.hours > 24) {
+        state.days += Math.floor(state.hours/24);
+        state.hours = state.hours % 24;
+        newDay = true;
       }
   
       //Calculations for each one

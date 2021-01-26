@@ -9,33 +9,25 @@ export const capitalizeFirstLetter = (string) => {
 class CalculatorView extends Component {
     constructor(props) {
         super(props);
-        this.state = {patches: {}, plants: {}}
+        this.state = {patches: this.props.patches, plants: this.props.plants}
     }
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-
-        // This will erase any local state updates!
-        // Do not do this.
-        this.setState({ patches: nextProps.patches, plants: nextProps.plants });
-    }
-
     render() {
         
         return (
             <div>
-                {Object.keys(this.state.patches).map((x, i) => {
+                {Object.keys(this.props.patches).map((x, i) => {
                     let named = x + 's';
-                    let plants = this.state.plants[x + 's'];
+                    let plants = this.props.plants[x + 's'];
                     if (x === 'cacti' || x.includes('special')) {
-                        plants = this.state.plants[x];
+                        plants = this.props.plants[x];
                         named = x;
                     }
                     if (x === 'bush') {
-                        plants = this.state.plants[x + "es"];
+                        plants = this.props.plants[x + "es"];
                         named = x + "es";
                     }
                     return <Patches
-                    patches={this.state.patches[x]} 
+                    patches={this.props.patches[x]} 
                     plants={plants}
                     name={capitalizeFirstLetter(x)} 
                     level={this.props.level}
