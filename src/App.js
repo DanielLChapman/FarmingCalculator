@@ -272,6 +272,7 @@ class App extends Component {
 
     try {
       state.planting[s0.type].patches[s0.location] = {...s0.patches[s0.location]};
+    
     }
     catch (err) {
       state.planting[s0.type] = {
@@ -284,6 +285,7 @@ class App extends Component {
     if (!state.pause) {
       state.pause = true;
     }
+
     
 
     this.setState({...state});

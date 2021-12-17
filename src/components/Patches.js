@@ -44,6 +44,12 @@ class Patches extends Component {
     handlePatchesClick = () => {
 
     }
+    setAllPatchesTheSame = () => {
+        //get all locations
+        //get the data
+        //update the patches for all location to be the same as the data
+        //send to main
+    }
     render() {
         //Need a check for chopping for exp and not
 
@@ -76,6 +82,7 @@ class Patches extends Component {
                 <div>
                     <h5 onClick={this.handleClick}>{pluralize(convertSpecial(this.props.name))}</h5>
                     <div className="sub-patches" style={displayValue}>
+            
                     {Object.keys(this.props.patches).map((x, i) => {
                             return <div key={i}>
                                 {capitalizeFirstLetter(x.split('tree')[0])}
